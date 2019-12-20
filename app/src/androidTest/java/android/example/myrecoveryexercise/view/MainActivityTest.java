@@ -61,12 +61,14 @@ public class MainActivityTest {
         onView(withId(R.id.tab_layout)).check(matches(isCompletelyDisplayed()));
     }
 
+    // Check that view pager is displayed; user can swipe left
     @Test
     public void swipePage() {
         onView(withId(R.id.view_pager)).check(matches(isDisplayed()));
         onView(withId(R.id.view_pager)).perform(swipeLeft());
     }
 
+    // Check Toast fragment text views display correct text
     @Test
     public void toastTextViews() {
         SystemClock.sleep(1500);
@@ -82,6 +84,7 @@ public class MainActivityTest {
                 .check(matches(withText("Once known, set your procedure date in the **Profile** section of the **More** tab, to activate more content.")));
     }
 
+    // Check Notification fragment text views display correct text
     @Test
     public void notificationTextViews() {
         SystemClock.sleep(1500);
@@ -95,6 +98,14 @@ public class MainActivityTest {
                 .check(matches(withText("true")));
         onView(allOf(withId(R.id.not_text_text_view), isDescendantOfA(withId(R.id.view_pager))))
                 .check(matches(withText("If you know the date of your procedure, set it in the app now to start tracking your progress")));
+        onView(allOf(withId(R.id.not_tab_text_view), isDescendantOfA(withId(R.id.view_pager))))
+                .check(matches(withText("more")));
+        onView(allOf(withId(R.id.not_pushPage_text_view), isDescendantOfA(withId(R.id.view_pager))))
+                .check(matches(withText("moreProfile")));
+        onView(allOf(withId(R.id.not_milestone_text_view), isDescendantOfA(withId(R.id.view_pager))))
+                .check(matches(withText("operation")));
+        onView(allOf(withId(R.id.not_localtime_text_view), isDescendantOfA(withId(R.id.view_pager))))
+                .check(matches(withText("15:00")));
     }
 
 

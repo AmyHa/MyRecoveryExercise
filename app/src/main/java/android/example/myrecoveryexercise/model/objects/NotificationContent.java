@@ -1,9 +1,5 @@
 package android.example.myrecoveryexercise.model.objects;
 
-import android.util.Log;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class NotificationContent extends BaseContent {
 
@@ -17,31 +13,29 @@ public class NotificationContent extends BaseContent {
 
     public String getTab() {
         String key = "tab=";
-        int startIndex = super.getText().indexOf(key);
-        int endIndex = super.getText().indexOf("&", startIndex);
-
-        return super.getText().substring(startIndex + key.length(),endIndex);
+        return returnValueOfKey(key, "&");
     }
 
 
     public String getPushPage() {
         String key = "pushPage=";
-        int startIndex = super.getText().indexOf(key);
-        int endIndex = super.getText().indexOf("&", startIndex);
-        return super.getText().substring(startIndex + key.length(),endIndex);
+        return returnValueOfKey(key, "&");
     }
 
     public String getMilestone() {
         String key = "milestone=";
-        int startIndex = super.getText().indexOf(key);
-        int endIndex = super.getText().indexOf("&", startIndex);
-        return super.getText().substring(startIndex + key.length(),endIndex);
+        return returnValueOfKey(key, "&");
     }
 
     public String getLocalTime() {
         String key = "localTime=";
+        return returnValueOfKey(key, "}");
+    }
+
+    // Returns substring between Key string and a specific character (endChar)
+    String returnValueOfKey(String key, String endChar) {
         int startIndex = super.getText().indexOf(key);
-        int endIndex = super.getText().indexOf("}", startIndex);
+        int endIndex = super.getText().indexOf(endChar, startIndex);
         return super.getText().substring(startIndex + key.length(),endIndex);
     }
 

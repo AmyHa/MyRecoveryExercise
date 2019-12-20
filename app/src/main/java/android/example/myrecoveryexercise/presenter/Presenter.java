@@ -28,7 +28,7 @@ public class Presenter implements Contract.View, Contract.Model.OnToastLoadFinis
 
     @Override
     public void onToastFailed(Throwable t) {
-        Log.d(TAG, "onToastFailed: " + t);
+        Log.e(TAG, "onToastFailed: " + t);
     }
 
     @Override
@@ -64,6 +64,6 @@ public class Presenter implements Contract.View, Contract.Model.OnToastLoadFinis
 
     @Override
     public void onNotificationFailed(Throwable t) {
-        Log.d(TAG, "onNotificationFailed: " + t);
+        Log.e(TAG, "onNotificationFailed: " + t);
     }
 }
