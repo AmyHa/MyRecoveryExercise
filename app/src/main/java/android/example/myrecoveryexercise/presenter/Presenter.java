@@ -28,7 +28,11 @@ public class Presenter implements Contract.View, Contract.Model.OnToastLoadFinis
 
     @Override
     public void onToastFailed(Throwable t) {
-        Log.e(TAG, "onToastFailed: " + t);
+        try {
+            throw t;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     @Override
@@ -64,6 +68,10 @@ public class Presenter implements Contract.View, Contract.Model.OnToastLoadFinis
 
     @Override
     public void onNotificationFailed(Throwable t) {
-        Log.e(TAG, "onNotificationFailed: " + t);
+        try {
+            throw t;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

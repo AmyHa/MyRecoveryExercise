@@ -3,17 +3,16 @@ package android.example.myrecoveryexercise.presenter;
 import android.example.myrecoveryexercise.Contract;
 import android.example.myrecoveryexercise.model.objects.NotificationContent;
 import android.example.myrecoveryexercise.model.objects.ToastContent;
-import android.util.Log;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.MockitoAnnotations;
 
-
-@RunWith(MockitoJUnitRunner.class)
 public class PresenterTest {
+
+    @Mock
+    private Presenter presenter;
 
     @Mock
     private Contract.Presenter mockContractPresenter;
@@ -32,15 +31,12 @@ public class PresenterTest {
     @Mock
     private Contract.Model.OnNotificationFinishedListener onNotificationFinishedListener;
 
-    private Presenter presenter;
-
-    private Throwable t;
-    private Log log;
-    private static final String toastFailure = "onToastFailed: ";
-    private static final String notFailure = "onNotificationFailed: ";
-
     @Before
     public void setUp() {
+
+        //Make sure a new mock is created for each new test and so all tests are independent
+        MockitoAnnotations.initMocks(this);
+
         presenter = new Presenter(mockContractPresenter);
 
         // Dummy data (this data would be fetched from the web in production)
@@ -58,8 +54,8 @@ public class PresenterTest {
 
     }
 
-    // Check whether the Presenter can talk to the Model i.e. ask Model
-    // to provide the data Presenter wants
+    // Check whether the Presenter can communicate with the Model i.e. ask Model
+    // to provide the data that Presenter wants
     @Test
     public void askModelForData() {
 
@@ -71,7 +67,9 @@ public class PresenterTest {
     // On success of data retrieval, check whether the Presenter
     // can set retrieved data for View to consume
     @Test
-    public void onSuccessSetDataForView(){
+    public void setDataForViewOnSuccess(){
+
+        presenter.onToastSuccess(toastContent);
 
         if(mockContractPresenter != null) {
             mockContractPresenter.setToastData(toastContent);
@@ -80,6 +78,10 @@ public class PresenterTest {
 
     }
 
-    // We need to somehow test what happens when retrieval of data fails
+    @Test
+    public void throwErrorOnFailure() {
 
+        presenter.onToastFailed(new Throwable());
+
+    }
 }
