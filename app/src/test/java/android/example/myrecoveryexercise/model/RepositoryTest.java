@@ -10,8 +10,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 
 /*
- * This test class assumes that Retrofit works
- * Plus we will not be hitting the API
+ * This test class assumes that Retrofit works; we will not be hitting the API
  * We are only checking that the repository can pass fetched data to its listeners
  */
 

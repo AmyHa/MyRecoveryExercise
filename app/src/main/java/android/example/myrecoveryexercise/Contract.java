@@ -2,6 +2,7 @@ package android.example.myrecoveryexercise;
 
 import android.example.myrecoveryexercise.model.objects.NotificationContent;
 import android.example.myrecoveryexercise.model.objects.ToastContent;
+import android.widget.ProgressBar;
 
 public interface Contract {
 
@@ -35,8 +36,8 @@ public interface Contract {
 
     interface View {
 
-        void showProgress();
-        void hideProgress();
+        void showProgress(ProgressBar progressBar);
+        void hideProgress(ProgressBar progressBar);
 
         void addToastResults();
         void addNotificationResults();

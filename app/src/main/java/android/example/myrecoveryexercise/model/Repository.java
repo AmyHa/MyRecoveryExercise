@@ -1,12 +1,9 @@
 package android.example.myrecoveryexercise.model;
 
 import android.example.myrecoveryexercise.Contract;
-import android.example.myrecoveryexercise.model.objects.BaseContent;
 import android.example.myrecoveryexercise.model.objects.NotificationContent;
 import android.example.myrecoveryexercise.model.objects.ToastContent;
 import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -16,7 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 // the Model implements the Contract.Model interface, and this class interacts with the Presenter
-// to provide Toast data
+// to fetch and pass Toast data
 
 public class Repository implements Contract.Model {
 
@@ -36,7 +33,6 @@ public class Repository implements Contract.Model {
                 .build();
 
         service = retrofit.create(Service.class);
-
 
     }
 

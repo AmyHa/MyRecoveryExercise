@@ -5,7 +5,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,10 +13,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Set two-tab layout for each fragment
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.toast_tab)));
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.notification_tab)));
 
+        // Set viewpager for tab layout
         final ViewPager viewPager = findViewById(R.id.view_pager);
         TabsAdapter tabsAdapter = new TabsAdapter(getSupportFragmentManager(),
                 tabLayout.getTabCount());

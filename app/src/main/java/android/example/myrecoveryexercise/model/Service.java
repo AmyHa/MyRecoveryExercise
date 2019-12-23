@@ -1,6 +1,5 @@
 package android.example.myrecoveryexercise.model;
 
-import android.example.myrecoveryexercise.model.objects.BaseContent;
 import android.example.myrecoveryexercise.model.objects.NotificationContent;
 import android.example.myrecoveryexercise.model.objects.ToastContent;
 

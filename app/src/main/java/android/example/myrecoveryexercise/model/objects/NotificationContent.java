@@ -1,6 +1,5 @@
 package android.example.myrecoveryexercise.model.objects;
 
-
 public class NotificationContent extends BaseContent {
 
     private static final String TAG = "NotificationContent";

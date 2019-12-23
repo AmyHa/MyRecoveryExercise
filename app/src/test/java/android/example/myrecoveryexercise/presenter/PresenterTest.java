@@ -39,19 +39,6 @@ public class PresenterTest {
 
         presenter = new Presenter(mockContractPresenter);
 
-        // Dummy data (this data would be fetched from the web in production)
-        toastContent.setSlug("slug");
-        toastContent.setRateable(true);
-        toastContent.setText("text");
-        toastContent.setTitle("title");
-        toastContent.setType("type");
-
-        notContent.setSlug("slug");
-        notContent.setRateable(true);
-        notContent.setText("text");
-        notContent.setTitle("title");
-        notContent.setType("type");
-
     }
 
     // Check whether the Presenter can communicate with the Model i.e. ask Model

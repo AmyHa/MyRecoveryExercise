@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class ToastFragment extends Fragment implements Contract.Presenter {
@@ -28,6 +29,9 @@ public class ToastFragment extends Fragment implements Contract.Presenter {
     private TextView rateableTextView;
     private TextView textTextView;
 
+    private ProgressBar progressBar;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -43,6 +47,8 @@ public class ToastFragment extends Fragment implements Contract.Presenter {
         rateableTextView = view.findViewById(R.id.toast_rateable_text_view);
         textTextView = view.findViewById(R.id.toast_text_text_view);
 
+        progressBar = view.findViewById(R.id.progress_bar_toast);
+
         loadToastData();
 
         return view;
@@ -53,6 +59,7 @@ public class ToastFragment extends Fragment implements Contract.Presenter {
     @Override
     public void loadToastData() {
         presenterImp.addToastResults();
+        presenterImp.showProgress(progressBar);
     }
 
     @Override
@@ -78,6 +85,8 @@ public class ToastFragment extends Fragment implements Contract.Presenter {
         titleTextView.setText(toastContent.getTitle());
         rateableTextView.setText(String.valueOf(toastContent.isRateable()));
         textTextView.setText(toastContent.getText());
+
+        presenterImp.hideProgress(progressBar);
     }
 
 }

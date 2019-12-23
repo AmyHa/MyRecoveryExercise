@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class NotificationFragment extends Fragment implements Contract.Presenter {
@@ -32,6 +33,8 @@ public class NotificationFragment extends Fragment implements Contract.Presenter
     private TextView pushPageTextView;
     private TextView milestoneTextView;
     private TextView localTimeTextView;
+
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -54,6 +57,8 @@ public class NotificationFragment extends Fragment implements Contract.Presenter
         milestoneTextView = view.findViewById(R.id.not_milestone_text_view);
         localTimeTextView = view.findViewById(R.id.not_localtime_text_view);
 
+        progressBar = view.findViewById(R.id.progress_bar_notification);
+
         loadNotificationData();
 
         return view;
@@ -73,6 +78,7 @@ public class NotificationFragment extends Fragment implements Contract.Presenter
     @Override
     public void loadNotificationData() {
         presenterImp.addNotificationResults();
+        presenterImp.showProgress(progressBar);
     }
 
     @Override
@@ -81,6 +87,7 @@ public class NotificationFragment extends Fragment implements Contract.Presenter
         setViews();
     }
 
+    // Once View has received a result from the network request - set all views
     private void setViews() {
         slugTextView.setText(notContent.getSlug());
         typeTextView.setText(notContent.getType());
@@ -91,5 +98,7 @@ public class NotificationFragment extends Fragment implements Contract.Presenter
         pushPageTextView.setText(notContent.getPushPage());
         milestoneTextView.setText(notContent.getMilestone());
         localTimeTextView.setText(notContent.getLocalTime());
+
+        presenterImp.hideProgress(progressBar);
     }
 }

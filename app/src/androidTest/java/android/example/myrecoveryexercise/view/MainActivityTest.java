@@ -1,8 +1,14 @@
 package android.example.myrecoveryexercise.view;
 
 import android.example.myrecoveryexercise.R;
+import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.widget.ProgressBar;
+
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
@@ -14,14 +20,21 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.action.ViewActions.swipeLeft;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.AllOf.allOf;
+import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
+
+/*
+ * Note: our progress bar is replaced with a indeterminate drawable in setUp() as Espresso doesn't
+ * work well with animations. We are only interested in checking that it is displayed / not displayed
+ * under certain conditions
+ */
 
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
@@ -31,11 +44,29 @@ public class MainActivityTest {
     @Rule
     public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule<>(MainActivity.class);
 
-
     @Before
     public void setUp() {
         mMainActivity = activityRule.getActivity();
         assertThat(mMainActivity, notNullValue());
+
+        Drawable notAnimatedDrawable = ContextCompat.getDrawable(activityRule.getActivity(),
+                R.mipmap.ic_launcher);
+        ((ProgressBar) activityRule.getActivity().findViewById(R.id.progress_bar_toast))
+                .setIndeterminateDrawable(notAnimatedDrawable);
+        ((ProgressBar) activityRule.getActivity().findViewById(R.id.progress_bar_notification))
+                .setIndeterminateDrawable(notAnimatedDrawable);
+    }
+
+    @Test
+    public void toastProgressBarVisibleOnLoad() {
+        onView(withId(R.id.progress_bar_toast)).check(matches(withEffectiveVisibility
+                (ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void notificationProgressBarVisibleOnLoad() {
+        onView(withId(R.id.progress_bar_notification)).check(matches(withEffectiveVisibility
+                (ViewMatchers.Visibility.VISIBLE)));
     }
 
     @Test
@@ -43,9 +74,10 @@ public class MainActivityTest {
         ActivityScenario.launch(MainActivity.class);
     }
 
+
     @Test
     public void tabLayoutVisibility() {
-        onView(withId(R.id.tab_layout)).check(matches(isCompletelyDisplayed()));
+        onView(withId(R.id.tab_layout)).check(matches(isDisplayed()));
     }
 
     // Check that view pager is displayed; user can swipe left
@@ -95,5 +127,12 @@ public class MainActivityTest {
                 .check(matches(withText("15:00")));
     }
 
+
+    @Test
+    public void progressBarsInvisibleAfterSetViews() {
+        SystemClock.sleep(1500);
+        onView(withId(R.id.progress_bar_notification)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.progress_bar_toast)).check(matches(not(isDisplayed())));
+    }
 
 }

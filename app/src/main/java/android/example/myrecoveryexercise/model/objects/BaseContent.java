@@ -1,6 +1,5 @@
 package android.example.myrecoveryexercise.model.objects;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class BaseContent {
